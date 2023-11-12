@@ -101,8 +101,7 @@ radarchart(subscales3, axistype=1 ,
             #custom the grid
             cglcol="black", cglty=4, axislabcol="black", caxislabels=seq(0,10,2.5), cglwd=0.8,
             #custom labels
-            vlcex=1
-)
+            vlcex=1)
 #******************************************** Scatter plot ******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #--------------------------------------- PWB VS RES---------------------------------------------------------------------------------------------------------------------------------------------------
 #Getting the parameters of the regression model for the scatter plot
@@ -139,10 +138,12 @@ ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD, color = pc)) +
   theme_minimal() +scale_color_gradient(low = "#D7E3FB", high = "#092C71")
 #****************************************** Teacher experience histogram *************************************************************************************************************************************************************
 ggplot(data = data1, aes(x = TEACHING_EXPERIENCE)) +
-  geom_histogram(colour="#1F3552", fill="#4271AE",bins=7)+scale_x_continuous(breaks = seq(0,70,10),name="Number of years")+
+  geom_histogram(colour="#1F3552", fill="#4271AE",bins=7,boundary=0)+scale_x_continuous(breaks = seq(0,70,10),name="Number of years")+
   ggtitle("Years of teaching experience",)+scale_y_continuous(name="Number of teachers", breaks = seq(0,60, by =10))+
   theme_bw()+ theme(plot.title = element_text(hjust = 0.5))+geom_text(aes(label =..count..), vjust = -0.2,stat="bin", size=4,vjust=-1,breaks = seq(0, 70, 10))
-
-
-
+#******************************************* Age of teachers *********************************************************************************************************************************************************************************************
+ggplot(data = data1, aes(x =AGE)) +
+  geom_histogram(colour="#1F3552", fill="#4271AE",binwidth =5,boundary=20)+scale_x_continuous(breaks = seq(20,70,5),name="Age")+
+  ggtitle("Age of the teachers",)+scale_y_continuous(name="Number of teachers", breaks = seq(0,30, by =10))+
+  theme_bw()+ theme(plot.title = element_text(hjust = 0.5))+geom_text(aes(label =..count..), vjust = -0.2,stat="bin", size=4,vjust=-1,breaks = seq(20, 70, 5))
 
