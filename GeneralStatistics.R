@@ -138,9 +138,9 @@ model
 d=data.frame(TOTALSCORE_RES_STD,TOTALSCORE_PWB_STD)
 d$pc <- predict(prcomp(~TOTALSCORE_RES_STD+TOTALSCORE_PWB_STD,d))[,1]
 ggplot(d, aes(TOTALSCORE_RES_STD,TOTALSCORE_PWB_STD, color = pc)) +
-  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("RES VS PWB") +
-  xlab("RES_STD SCORES") + ylab("PWB_STD SCORES")+geom_abline(intercept = 4.9131 , slope =  0.5369 , color="red", linetype="dashed", size=1.5)+
-  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Wagnild & Young’s Resilience Scale VS PWRyff’s PWB Inventory ") +
+  xlab("RES SCORES") + ylab("PWB SCORES")+geom_abline(intercept = 4.11 , slope =  0.47 , color="red", linetype="dashed", size=1.5)+
+  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 #---------------------------------------- MBI VS RES -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Getting the parameters of the regression model for the scatter plot
 model <- lm( TOTALSCORE_RES_STD~ TOTALSCORE_MBI_STD, data = data1)
@@ -149,9 +149,9 @@ model
 d=data.frame(TOTALSCORE_MBI_STD,TOTALSCORE_RES_STD)
 d$pc <- predict(prcomp(~TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD, d))[,1]
 ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_RES_STD, color = pc)) +
-  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("MBI VS RES") +
-  xlab("MBI_STD SCORES") + ylab("RES_STD SCORES")+geom_abline(intercept = 6.0179 , slope =0.1683 , color="red", linetype="dashed", size=1.5)+
-  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Maslach’s Burnout Inventory  VS Wagnild & Young’s Resilience Scale") +
+  xlab("MBI SCORES") + ylab("RES SCORES")+geom_abline(intercept = 6.0179 , slope =0.1683 , color="red", linetype="dashed", size=1.5)+
+  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 #---------------------------------------- MBI VS PWB ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
 #Getting the parameters of the regression model for the scatter plot
 model <- lm( TOTALSCORE_PWB_STD~ TOTALSCORE_MBI_STD, data = data1)
@@ -160,14 +160,14 @@ model
 d=data.frame(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD)
 d$pc <- predict(prcomp(~TOTALSCORE_MBI_STD+TOTALSCORE_PWB_STD, d))[,1]
 ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD, color = pc)) +
-  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("MBI VS PWB") +
-  xlab("MBI_STD SCORES") + ylab("PWB_STD SCORES")+geom_abline(intercept = 8.31219 , slope =  0.06041 , color="red", linetype="dashed", size=1.5)+
-  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Maslach’s Burnout Inventory  VS Ryff’s PWB Inventory") +
+  xlab("MBI SCORES") + ylab("PWB SCORES")+geom_abline(intercept = 7.05 , slope =  0.06 , color="red", linetype="dashed", size=1.5)+
+  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 #****************************************** Teacher experience histogram *************************************************************************************************************************************************************
 ggplot(data = data1, aes(x = TEACHING_EXPERIENCE)) +
-  geom_histogram(colour="#1F3552", fill="#008AA6",binwidth=5,boundary=0)+scale_x_continuous(breaks = seq(0,65,5),name="Number of years")+
+  geom_histogram(colour="#1F3552", fill="#008AA6",binwidth=5,boundary=0)+scale_x_continuous(breaks = seq(0,45,5),name="Number of years")+
   ggtitle("Years of teaching experience",)+scale_y_continuous(name="Number of teachers", breaks = seq(0,60, by =10))+
-  theme_bw()+ theme(plot.title = element_text(hjust = 0.5))+geom_text(aes(label =..count..), vjust = -0.2,stat="bin", size=4,vjust=-1,breaks = seq(0, 50, 10))
+  theme_bw()+ theme(plot.title = element_text(hjust = 0.5))+geom_text(aes(label =..count..), vjust = -0.2,stat="bin", size=4,vjust=-1,breaks = seq(0, 45, 5))
 #******************************************* Age of teachers *********************************************************************************************************************************************************************************************
 ggplot(data = data1, aes(x =AGE)) +
   geom_histogram(colour="#1F3552", fill="#008AA6",binwidth =5,boundary=20)+scale_x_continuous(breaks = seq(20,70,5),name="Age")+
