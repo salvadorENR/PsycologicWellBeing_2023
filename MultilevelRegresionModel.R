@@ -38,7 +38,15 @@ summary(m7)
 #************************* Examples of multilevel regression model ************************************
 #Model 1 (10.3.2 Unconditional Means Model (Model 1: Null Model)
 m1 <- lme(mathach ~ 1, random = ~1|SCH_ID, na.action = "na.omit", method = "ML", data = chp10)
-#Model 2 
+#Model 2 (Random-intercept model)
+m2 <- lme(mathach ~ gceffic, random = ~1|SCH_ID, na.action="na.omit", method="ML", data=chp10)
+#Model 3 (Random-coefficient model)
+m3 <- lme(mathach ~ gceffic, random = ~gceffic|SCH_ID, na.action="na.omit", method="ML", data=chp10)
+#Model 4
+m4 <- lme(mathach ~ gceffic + public + csclimat, random = ~gceffic|SCH_ID, na.action = "na.omit", method = "ML", data = chp10)
+#Model 5 (Contextual model with cross-level interactions)
+m5 <- lme(mathach ~ gceffic + public + csclimat + public*gceffic + csclimat*gceffic, random = ~gceffic|SCH_ID, method="ML", data=chp10)
+
 
 
 
