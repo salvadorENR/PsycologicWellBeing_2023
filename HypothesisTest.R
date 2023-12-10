@@ -82,7 +82,52 @@ test <- wilcox.test(STUDENTSCORE ~groupV1,data=data1,alternative = "less",paired
 test
 #Wilcoxon test by teacher experience
 #Hypothesis test 8
-teacherEXP=function(var1){
+median(TOTALSCORE_PWB_STD)
+PWBClass=function(var1){
+  group=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]<=7.4){
+      m=m+1
+      group[m]=1
+    }
+    else{
+      m=m+1
+      group[m]=2
+    }
+    
+  }
+  group
+}
+groupV2=PWBClass(TOTALSCORE_PWB_STD)
+Tapply(TOTALSCORE_MBI_STD ~ groupV2,median,data=data1)
+test <- wilcox.test(TOTALSCORE_MBI_STD ~ groupV2,data=data1,alternative = "less",paired = FALSE)
+test
+
+median(TOTALSCORE_RES_STD)
+RESClass=function(var1){
+  group=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]<=7.1){
+      m=m+1
+      group[m]=1
+    }
+    else{
+      m=m+1
+      group[m]=2
+    }
+    
+  }
+  group
+}
+groupV2=RESClass(TOTALSCORE_RES_STD)
+Tapply(TOTALSCORE_MBI_STD ~ groupV2,median,data=data1)
+test <- wilcox.test(TOTALSCORE_MBI_STD ~ groupV2,data=data1,alternative = "two.sided",paired = FALSE)
+test
+
+median(TEACHING_EXPERIENCE)
+TXClass=function(var1){
   group=numeric()
   m=0
   for (i in 1:length(var1)) {
@@ -98,9 +143,10 @@ teacherEXP=function(var1){
   }
   group
 }
-groupV2=teacherEXP(TEACHINGEXPERIENCE)
-Tapply(STUDENTSCORE ~ groupV2,median,data=data1)
-Tapply(SCORE_SMK ~ groupV2,median,data=data1)
-Tapply(SCORE_PCK ~ groupV2,median,data=data1)
+groupV2=TXClass(TEACHING_EXPERIENCE)
+Tapply(TOTALSCORE_MBI_STD ~ groupV2,median,data=data1)
+test <- wilcox.test(TOTALSCORE_MBI_STD ~ groupV2,data=data1,alternative = "two.sided",paired = FALSE)
+test
+median(TEACHING_EXPERIENCE)
 
 
