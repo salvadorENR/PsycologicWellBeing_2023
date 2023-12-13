@@ -1,0 +1,64 @@
+#---------------------- Osawa's Request --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+MBIBASE_s1=data.frame(MBI1,MBI2,MBI3,MBI6,MBI8,MBI13,MBI14,MBI16,MBI20)
+cronbach.alpha(MBIBASE_s1, CI=TRUE, standardized=TRUE)
+
+MBIBASE_s2=data.frame(MBI5,MBI10,MBI11,MBI15,MBI22)
+cronbach.alpha(MBIBASE_s2, CI=TRUE, standardized=TRUE)
+
+MBIBASE_s3=data.frame(MBI4,MBI7,MBI9,MBI12,MBI17,MBI18,MBI19,MBI21)
+cronbach.alpha(MBIBASE_s3, CI=TRUE, standardized=TRUE)
+
+clasificar1=function(var1){
+  m=0
+  Low=0
+  Med=0
+  Hig=0
+  Per=numeric()
+  for (i in 1:length(var1)) {
+    m=m+1
+    if(var1[m]<4){
+      Low=Low+1
+    }
+    else{
+      if(var1[m]>=4&&var1[m]<7){
+        Med=Med+1
+      }
+      else{
+        Hig=Hig+1
+      }
+    }
+  }
+  Per=c(Low/length(var1)*100,Med/length(var1)*100,Hig/length(var1)*100)
+  Per
+}
+
+RiskLevels1=clasificar1(SCORE_MBI_S1_STD)
+RiskLevels1
+
+RiskLevels2=clasificar1(SCORE_MBI_S2_STD)
+RiskLevels2
+
+RiskLevels3=clasificar1(SCORE_MBI_S3_STD)
+RiskLevels3
+
+RiskLevelPWBs1=clasificar1(SCORE_PWB_S1_STD)
+RiskLevelPWBs1
+RiskLevelPWBs2=clasificar1(SCORE_PWB_S2_STD)
+RiskLevelPWBs2
+RiskLevelPWBs3=clasificar1(SCORE_PWB_S3_STD)
+RiskLevelPWBs3
+RiskLevelPWBs4=clasificar1(SCORE_PWB_S4_STD)
+RiskLevelPWBs4
+RiskLevelPWBs5=clasificar1(SCORE_PWB_S5_STD)
+RiskLevelPWBs5
+
+RiskLevelRESs1=clasificar1(SCORE_RES_S1_STD)
+RiskLevelRESs1
+RiskLevelRESs2=clasificar1(SCORE_RES_S2_STD)
+RiskLevelRESs2
+RiskLevelRESs3=clasificar1(SCORE_RES_S3_STD)
+RiskLevelRESs3
+RiskLevelRESs4=clasificar1(SCORE_RES_S4_STD)
+RiskLevelRESs4
+RiskLevelRESs5=clasificar1(SCORE_RES_S5_STD)
+RiskLevelRESs5
