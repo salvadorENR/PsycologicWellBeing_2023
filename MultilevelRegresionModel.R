@@ -5,7 +5,10 @@ install.packages("lme4")
 install.packages("ggeffects")               
 install.packages("stargazer")               
 install.packages("texreg") 
+install.packages(c("lme4", "MuMIn"))
 
+library(lme4)
+library(MuMIn)
 library(datos)
 library(ggplot2)
 library(reshape2)
@@ -24,12 +27,11 @@ library(stargazer)
 library(texreg)  
 library(dplyr)
 
-#Loading data base
+#***********************************************Loading data base *******************************************************
 DBT=read.csv("DBHE.csv",sep = ",")
 DBT=as.data.frame(DBT)
 attach(DBT)
-TEACHING_EXPERIENCE
-
+#********************Creating the function to clasify the teachers according to their time of teaching experience ******************************************************************************************************************
 TXClass=function(var1){
   rango=numeric()
   m=0
@@ -57,13 +59,74 @@ TXClass=function(var1){
   }
   rango
 }
-
+#************************************Application of the function to classify the teachers******************************************************************************************************************
 RangoYTE=TXClass(TEACHING_EXPERIENCE)
+#****************************************** Creating the data frame to apply the modelling ******************************************************************************************************************
 DBTM=data.frame(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD,TOTALSCORE_RES_STD,RangoYTE)
+#*************** First model, TOTALSCORE_MBI_STD=TOTALSCORE_PWB_STD+TOTALSCORE_RES_STD (Multilevel) **************************************************************************************************************************************
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Model1<-lme(TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD+TOTALSCORE_RES_STD, random = list(RangoYTE = pdIdent(~ TOTALSCORE_PWB_STD+TOTALSCORE_RES_STD)), data = DBTM)
+summary(Model1)
+#*************** Second model, TOTALSCORE_MBI_STD=TOTALSCORE_PWB_STD (Multilevel)**************************************************************************************************************************************
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Model2=lme(TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD, random = ~TOTALSCORE_PWB_STD|RangoYTE, na.action="na.omit", method="ML", data=DBTM)
+summary(Model2)
+#*************** Third model, TOTALSCORE_MBI_STD=TOTALSCORE_PWB_STD (Simple model) **************************************************************************************************************************************
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Model3=lm(TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD,data=DBTM)
+summary(Model3)
+#*************** FoUrth model, TOTALSCORE_PWB_STD=TOTALSCORE_RES_STD+TOTALSCORE_MBI_STD (Multilevel) **************************************************************************************************************************************
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Model4<-lme(TOTALSCORE_PWB_STD~TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD, random = list(RangoYTE = pdIdent(~ TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD)), data = DBTM)
+summary(Model4)
+#*************** Fifth model, TOTALSCORE_PWB_STD=TOTALSCORE_RES_STD (Multilevel model) **************************************************************************************************************************************
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Model5=lme(TOTALSCORE_PWB_STD~TOTALSCORE_RES_STD, random = ~TOTALSCORE_RES_STD|RangoYTE, na.action="na.omit", method="ML", data=DBTM)
+summary(Model5)
+#*************** Sixth model, TOTALSCORE_PWB_STD=TOTALSCORE_RES_STD (Simple model) **************************************************************************************************************************************
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Model6=lm(TOTALSCORE_PWB_STD~TOTALSCORE_RES_STD,data=DBTM)
+summary(Model6)
 
-modelo<-lme(TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD+TOTALSCORE_RES_STD, random = list(TOTALSCORE_PWB_STD~1,TOTALSCORE_RES_STD~1)|RangoYTE, data = DBTM)
-modelo <-lme(TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD+TOTALSCORE_RES_STD, random = list(RangoYTE = pdIdent(~ TOTALSCORE_PWB_STD+TOTALSCORE_RES_STD)), data = DBTM)
-summary(modelo)
+#+++++++++++++++++++++++++++++++++++++++++++++++++++Validading and comparing models+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+rsquaredLM <- summary(LinearModel)$r.squared
+rsquaredLM
+adj_rsquaredLM <- summary(LinearModel)$adj.r.squared
+adj_rsquaredLM
+
+rsquared_conditional <- r.squaredGLMM(MultilevelModel)
+rsquared_marginal <- r.squaredGLMM(MultilevelModel, type = "marginal")
+adj_rsquaredML <- r.squaredGLMM(MultilevelModel, type = "conditional") - 
+  (r.squaredGLMM(MultilevelModel, type = "conditional") - rsquared_conditional) * 
+  (nobs(MultilevelModel) - 1) / (nobs(MultilevelModel) - ncol(model.matrix(MultilevelModel)))
+
+
+
+
+par(mfrow = c(1,2))
+plot(modelo3$residuals, main="Linear Regression Residuals")
+plot(resid(modelo2), main="Multilevel Regression Residuals")
+
+AIC(modelo3)
+AIC(modelo2)
+
+BIC(modelo3)
+BIC(modelo2)
+
+
+library(caret)
+set.seed(123)
+lm_cv <- train(response_variable ~ predictor1 + predictor2, data = your_data, method = "lm", trControl = trainControl(method = "cv"))
+multilevel_cv <- train(response_variable ~ predictor1 + predictor2, data = your_data, method = "lmer", trControl = trainControl(method = "cv"))
+
+summary(lm_cv)
+summary(multilevel_cv)
+
+
+
+
+
+
 
 #******************************* Analysis *******************************************************************************************************
 

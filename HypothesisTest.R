@@ -149,4 +149,56 @@ test <- wilcox.test(TOTALSCORE_MBI_STD ~ groupV2,data=data1,alternative = "two.s
 test
 median(TEACHING_EXPERIENCE)
 
+# Example data (replace this with your actual data)
+group1 <- c(15, 18, 20, 22, 25)
+group2 <- c(12, 14, 16, 18, 21)
+group3 <- c(10, 13, 15, 17, 19)
+
+# Combine the data into a list
+data <- list(Group1 = group1, Group2 = group2, Group3 = group3)
+
+# Perform Kruskal-Wallis test
+result <- kruskal.test(data)
+
+# Display the result
+print(result) 
+
+
+
+#If your data do not follow a normal distribution and you want to compare means between three groups, you can use 
+#a non-parametric test. One common non-parametric test for this scenario is the Kruskal-Wallis test. This test is
+#an extension of the Mann-Whitney U test to three or more groups. Here's how you can perform the Kruskal-Wallis 
+#test in R:
+#In this example, group1, group2, and group3 represent the quantitative data for each group. You need to replace 
+#these with your actual data.
+
+#The kruskal.test function will perform the Kruskal-Wallis test, and the result will include the test statistic, 
+#degrees of freedom, and the p-value.
+
+#If the p-value is below your chosen significance level (e.g., 0.05), you can reject the null hypothesis, suggesting
+#that there is a significant difference in medians between at least two of the groups. If the Kruskal-Wallis test indicates 
+#significant differences, you might consider post-hoc tests (e.g., Dunn's test) to identify which specific group pairs differ.
+
+#Remember that non-parametric tests like Kruskal-Wallis are less sensitive to normality assumptions but might have 
+#less power than parametric tests when normality is met. Always consider the characteristics of your data and the 
+#assumptions of the statistical test when making interpretations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
