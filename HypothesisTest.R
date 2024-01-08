@@ -1,4 +1,7 @@
 #***************************** Loading the required packages *************************************************************************************************************************************************************************************************************************************
+install.packages("dunn.test")
+install.packages("PMCMRplus")
+
 library(hrbrthemes)
 library(stargazer)               
 library(plyr)
@@ -31,10 +34,13 @@ library(ggeffects)
 library(stargazer)               
 library(texreg)  
 library(dplyr)
+library(dunn.test)
+library(PMCMRplus)
+
 #*************************************** Reading the data base *******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
-data1=read.csv("DBHE.csv",sep=",")
-data1=as.data.frame(data1)
-attach(data1)
+dataG=read.csv("DBHE.csv",sep=",")
+dataG=as.data.frame(dataG)
+attach(dataG)
 #************************************** Hypothesis tests ************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #Wilcoxon test by school zone
 #Hypothesis test1 and 2 
@@ -150,9 +156,9 @@ test
 median(TEACHING_EXPERIENCE)
 
 # Example data (replace this with your actual data)
-group1 <- c(15, 18, 20, 22, 25)
+group1 <- c(15, 18, 20)
 group2 <- c(12, 14, 16, 18, 21)
-group3 <- c(10, 13, 15, 17, 19)
+group3 <- c(10, 13, 15, 17)
 
 # Combine the data into a list
 data <- list(Group1 = group1, Group2 = group2, Group3 = group3)
@@ -184,6 +190,168 @@ print(result)
 #assumptions of the statistical test when making interpretations.
 
 
+#****************************Emotion.exhaustion scale*******************************************
+TXClass=function(var1){
+  group=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]>=0&var1[i]<=15){
+      m=m+1
+      group[m]=1
+    }
+    if(var1[i]>=16&var1[i]<=24){
+      m=m+1
+      group[m]=2
+    }
+    if(var1[i]>=25){
+      m=m+1
+      group[m]=3
+    }
+    
+  }
+  group
+}
+
+data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
+print(kruskal_result2)
+dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")
+print(dunn_result2)
+
+data3 <- data.frame(var1=TOTALSCORE_RES_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result3 <- kruskal.test(var1 ~ var2, data = data3)
+print(kruskal_result3)
+dunn_result3 <- dunn.test(data3$var1, g = data3$var2, method = "bonferroni")
+print(dunn_result3)
+
+#****************************Depersonalization*******************************************
+TXClass=function(var1){
+  group=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]>=0&var1[i]<=5){
+      m=m+1
+      group[m]=1
+    }
+    if(var1[i]>=6&var1[i]<=10){
+      m=m+1
+      group[m]=2
+    }
+    if(var1[i]>=11){
+      m=m+1
+      group[m]=3
+    }
+    
+  }
+  group
+}
+
+data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+
+
+data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
+print(kruskal_result2)
+dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")
+print(dunn_result2)
+
+data3 <- data.frame(var1=TOTALSCORE_RES_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result3 <- kruskal.test(var1 ~ var2, data = data3)
+print(kruskal_result3)
+dunn_result3 <- dunn.test(data3$var1, g = data3$var2, method = "bonferroni")
+print(dunn_result3)
+
+#****************************Red.Pers.Accompl*******************************************
+TXClass=function(var1){
+  group=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]>=0&var1[i]<=30){
+      m=m+1
+      group[m]=1
+    }
+    if(var1[i]>=31&var1[i]<=36){
+      m=m+1
+      group[m]=2
+    }
+    if(var1[i]>=37){
+      m=m+1
+      group[m]=3
+    }
+    
+  }
+  group
+}
+
+data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+
+
+data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
+print(kruskal_result2)
+dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")
+print(dunn_result2)
+
+data3 <- data.frame(var1=TOTALSCORE_RES_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result3 <- kruskal.test(var1 ~ var2, data = data3)
+print(kruskal_result3)
+dunn_result3 <- dunn.test(data3$var1, g = data3$var2, method = "bonferroni")
+print(dunn_result3)
+#****************************Percentile 33, 66 and 99 *******************************************
+TXClass=function(var1){
+  group=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]>=0&var1[i]<=11){
+      m=m+1
+      group[m]=1
+    }
+    if(var1[i]>=12&var1[i]<=21){
+      m=m+1
+      group[m]=2
+    }
+    if(var1[i]>=22){
+      m=m+1
+      group[m]=3
+    }
+    
+  }
+  group
+}
+
+data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+
+
+data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
+print(kruskal_result2)
+dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")
+print(dunn_result2)
+
+data3 <- data.frame(var1=TOTALSCORE_RES_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+kruskal_result3 <- kruskal.test(var1 ~ var2, data = data3)
+print(kruskal_result3)
+dunn_result3 <- dunn.test(data3$var1, g = data3$var2, method = "bonferroni")
+print(dunn_result3)
 
 
 
@@ -195,10 +363,12 @@ print(result)
 
 
 
+data1
 
 
+q=quantile(TEACHING_EXPERIENCE,probs=c(0.33,0.66,0.99))
+q
 
 
-
-
-
+contains_decimal <- any(grepl("\\.", as.character(TEACHING_EXPERIENCE)))
+print(contains_decimal)
