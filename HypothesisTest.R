@@ -191,35 +191,34 @@ print(result)
 
 
 #****************************Emotion.exhaustion scale*******************************************
-TXClass=function(var1){
-  group=numeric()
+MBI_SCALE_EE=function(var1){
+  rango=numeric()
   m=0
   for (i in 1:length(var1)) {
-    if(var1[i]>=0&var1[i]<=15){
+    if(var1[i]<=18){
       m=m+1
-      group[m]=1
+      rango[m]=1
     }
-    if(var1[i]>=16&var1[i]<=24){
+    if(var1[i]>=19&var1[i]<=26){
       m=m+1
-      group[m]=2
+      rango[m]=2
     }
-    if(var1[i]>=25){
+    if(var1[i]>=27){
       m=m+1
-      group[m]=3
+      rango[m]=3
     }
-    
   }
-  group
+  rango
 }
 
-data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=MBI_SCALE_EE(SCORE_MBI_S1)) 
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
 print(kruskal_result1)
 dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
 print(dunn_result1)
 Tapply(data1$var1 ~ data1$var2,median,data=data1)
 
-data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=MBI_SCALE_DP(SCORE_MBI_S2)) 
 kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
 print(kruskal_result2)
 dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")

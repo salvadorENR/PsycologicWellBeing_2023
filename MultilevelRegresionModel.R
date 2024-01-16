@@ -75,10 +75,12 @@ summary(Model2)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Model3=lm(TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD,data=DBTM)
 summary(Model3)
-#*************** FoUrth model, TOTALSCORE_PWB_STD=TOTALSCORE_RES_STD+TOTALSCORE_MBI_STD (Multilevel) **************************************************************************************************************************************
+#*************** Fourth model, TOTALSCORE_PWB_STD=TOTALSCORE_RES_STD+TOTALSCORE_MBI_STD (Multilevel) **************************************************************************************************************************************
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Model4<-lme(TOTALSCORE_PWB_STD~TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD, random = list(RangoYTE = pdIdent(~ TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD)), data = DBTM)
+Model42<-lm(TOTALSCORE_PWB_STD~TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD, data = DBTM)
 summary(Model4)
+summary(Model42)
 #*************** Fifth model, TOTALSCORE_PWB_STD=TOTALSCORE_RES_STD (Multilevel model) **************************************************************************************************************************************
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Model5=lme(TOTALSCORE_PWB_STD~TOTALSCORE_RES_STD, random = ~TOTALSCORE_RES_STD|RangoYTE, na.action="na.omit", method="ML", data=DBTM)
@@ -171,5 +173,13 @@ model <- lme(response ~ predictor1 + predictor2, random = list(predictor1 ~ 1, p
 summary(model)
 
 
-
-
+datos1=rnorm(50,2,0.1)
+hist(datos1)
+datos1=c(datos1,7)
+datos1=round(datos1,2)
+nuevodatos1=(datos1-mean(datos1))/sd(datos1)
+nuevodatos1=round(nuevodatos1,2)
+nuevodatos1
+est_nuevodatos1=nuevodatos1*100+500
+est_nuevodatos1
+sort(est_nuevodatos1)
