@@ -6,6 +6,7 @@ install.packages("ggeffects")
 install.packages("stargazer")               
 install.packages("texreg") 
 install.packages(c("lme4", "MuMIn"))
+install.packages("caTools")
 
 library(lme4)
 library(MuMIn)
@@ -26,12 +27,13 @@ library(ggeffects)
 library(stargazer)               
 library(texreg)  
 library(dplyr)
+library(caTools)
 
 #***********************************************Loading data base *******************************************************
 DBT=read.csv("DBHE.csv",sep = ",")
 DBT=as.data.frame(DBT)
 attach(DBT)
-#********************Creating the function to clasify the teachers according to their time of teaching experience ******************************************************************************************************************
+#********************Creating the function to classify the teachers according to their time of teaching experience ******************************************************************************************************************
 TXClass=function(var1){
   rango=numeric()
   m=0
@@ -89,6 +91,382 @@ summary(Model5)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Adjusting the model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Model6=lm(TOTALSCORE_PWB_STD~TOTALSCORE_RES_STD,data=DBTM)
 summary(Model6)
+
+#**************************** validition of the model ************************** 
+#1.Split the Data
+split_ratio <- 0.8
+data_split <- sample.split(DBT$TOTALSCORE_PWB_STD, SplitRatio = split_ratio)
+train_data <- subset(DBT, data_split == TRUE)
+test_data <- subset(DBT, data_split == FALSE)
+
+#2.Train the Model
+model <- lm(TOTALSCORE_PWB_STD ~TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD, data = train_data)
+summary(model)
+
+# Step 3: Make Predictions
+predictions <- predict(model, newdata = test_data)
+
+# Step 4: Evaluate Performance
+mae <- mean(abs(test_data$TOTALSCORE_PWB_STD - predictions))
+mse <- mean((test_data$TOTALSCORE_PWB_STD - predictions)^2)
+rmse <- sqrt(mse)
+
+# Step 5: Visualize Residuals
+residuals <- test_data$TOTALSCORE_PWB_STD - predictions
+plot(test_data$TOTALSCORE_PWB_STD, 
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     , 
+     main = "Residual Plot", 
+     xlab = "Actual Values", 
+     ylab = "Residuals")
+abline(h = 0, col = "red", lty = 2)
+
+# Step 6: Cross-Validation (Optional)
+library(caret)
+cv_results <- train(model, data = dataset, method = "lm", trControl = trainControl(method = "cv", number = 5))
+
+# Display cross-validation results
+print(cv_results)
+
+# Step 7: Adjust Model if Necessary
+# You can try adjusting hyperparameters or adding polynomial features here.
+
+# Step 8: Check Assumptions
+# Use diagnostic plots to check assumptions
+par(mfrow = c(2, 2))
+plot(model)
+
+
+
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++Validading and comparing models+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 rsquaredLM <- summary(LinearModel)$r.squared

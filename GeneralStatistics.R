@@ -45,7 +45,7 @@ res2 <- rcorr(cbind(SCORE_PWB_S1_STD,SCORE_PWB_S2_STD, SCORE_PWB_S3_STD, SCORE_P
                       SCORE_RES_S1_STD,SCORE_RES_S2_STD,SCORE_RES_S3_STD,SCORE_RES_S4_STD,SCORE_RES_S5_STD,TOTALSCORE_RES_STD, SCORE_MBI_S1_STD,SCORE_MBI_S2_STD,SCORE_MBI_S3_STD,+   
                       TOTALSCORE_MBI_STD ), type = c("pearson","spearman"))
 res2 
-res3 <- rcorr(cbind( TOTALSCORE_PWB_STD, TOTALSCORE_RES_STD, TOTALSCORE_MBI_STD), type = c("pearson","spearman"))
+res3 <- rcorr(cbind( TOTALSCORE_PWB_STD, TOTALSCORE_RES_STD, TOTALSCORE_MBI_STD,SCORE_MBI_S1_STD,SCORE_MBI_S2_STD,SCORE_MBI_S3_STD,TEACHING_EXPERIENCE,AGE), type = c("pearson","spearman"))
 res3
 #--------------------------------- Cronbach's alpha ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 RESBASE=data.frame(RES1,RES2,RES3,RES4,RES5,RES6,RES7,RES8,RES9,RES10,RES11,RES12,RES13,+             
