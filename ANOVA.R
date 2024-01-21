@@ -1,7 +1,9 @@
 #***************************** Loading the required packages *************************************************************************************************************************************************************************************************************************************
 install.packages("dunn.test")
 install.packages("PMCMRplus")
+install.packages("onewaytests")
 
+library(onewaytests)
 library(hrbrthemes)
 library(stargazer)               
 library(plyr)
@@ -265,7 +267,7 @@ MBI_SCALE_PA=function(var1){
 TEACHING_EXPERIENCE1=TXClass(TEACHING_EXPERIENCE)
 EdadProfesores=Edad(AGE)
 EdadProfesores2=Edad2(AGE)
-PWB_I=PWBNiveles(TOTALSCORE_PWB)
+PWB_I=as.factor(PWBNiveles(TOTALSCORE_PWB))
 PWB_I=PWBNiveles2(TOTALSCORE_PWB)
 RES_I=RESNiveles(TOTALSCORE_RES)
 MBI_EE=MBI_SCALE_EE(SCORE_MBI_S1)
@@ -273,19 +275,20 @@ MBI_DP=MBI_SCALE_DP(SCORE_MBI_S2)
 MBI_PA=MBI_SCALE_PA(SCORE_MBI_S3)
 #****************************ANOVA ONE FACTOR*******************************************
 #++++++++++++++++++++++++++++TESTS++++++++++++++++++++++++++++++++++++++++++++++
-data1 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=MBI_SCALE_EE(SCORE_MBI_S1)) 
+data1 <- data.frame(var1=TOTALSCORE_MBI,var2=PWB_I) 
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
 print(kruskal_result1)
 dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
 print(dunn_result1)
 Tapply(data1$var1 ~ data1$var2,median,data=data1)
-#The interaction is not significant
+#The interaction is not significantb
 
-data2 <- data.frame(var1=TOTALSCORE_PWB_STD,var2=MBI_SCALE_DP(SCORE_MBI_S2)) 
+data2 <- data.frame(var1=TOTALSCORE_MBI,var2=RES_I) 
 kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
 print(kruskal_result2)
 dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")
 print(dunn_result2)
+Tapply(data2$var1 ~ data2$var2,median,data=data2)
 
 data3 <- data.frame(var1=TOTALSCORE_RES_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
 kruskal_result3 <- kruskal.test(var1 ~ var2, data = data3)
@@ -359,3 +362,23 @@ data3=data.frame(PWB_I,TOTALSCORE_MBI,RES_I)
 model=lm(TOTALSCORE_MBI~PWB_I*RES_I,data=data3)
 anova_result=anova(model)
 print(anova_result)
+
+data4=data.frame(PWB_I,TOTALSCORE_MBI)
+par(mfrow = c(1, 2))
+qqnorm(data4$TOTALSCORE_MBI)
+qqline(data4$TOTALSCORE_MBI)
+shapiro.test(data4$TOTALSCORE_MBI)
+boxplot(TOTALSCORE_MBI ~ PWB_I, data = data4)
+bf.test(TOTALSCORE_MBI ~ PWB_I, data = data4)
+leveneTest(TOTALSCORE_MBI ~ PWB_I, data = data4)
+model=lm(TOTALSCORE_MBI~PWB_I,data=data4)
+anova_result=anova(model)
+print(anova_result)
+
+data5=data.frame(RES_I,TOTALSCORE_MBI)
+model=lm(TOTALSCORE_MBI~RES_I,data=data5)
+anova_result=anova(model)
+print(anova_result)
+
+
+
