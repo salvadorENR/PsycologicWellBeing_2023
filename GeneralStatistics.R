@@ -131,36 +131,36 @@ radarchart(subscales3, axistype=1 ,
 #******************************************** Scatter plot ******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #--------------------------------------- PWB VS RES---------------------------------------------------------------------------------------------------------------------------------------------------
 #Getting the parameters of the regression model for the scatter plot
-model <- lm( TOTALSCORE_PWB_STD~ TOTALSCORE_RES_STD, data = data1)
+model <- lm( TOTALSCORE_RES_STD~TOTALSCORE_PWB_STD , data = data1)
 model
 #Making the graph
 d=data.frame(TOTALSCORE_RES_STD,TOTALSCORE_PWB_STD)
 d$pc <- predict(prcomp(~TOTALSCORE_RES_STD+TOTALSCORE_PWB_STD,d))[,1]
-ggplot(d, aes(TOTALSCORE_RES_STD,TOTALSCORE_PWB_STD, color = pc)) +
-  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Wagnild & Young’s Resilience Scale VS PWRyff’s PWB Inventory ") +
-  xlab("RES SCORES") + ylab("PWB SCORES")+geom_abline(intercept = 4.11 , slope =  0.47 , color="red", linetype="dashed", size=1.5)+
+ggplot(d, aes(TOTALSCORE_PWB_STD,TOTALSCORE_RES_STD, color = pc)) +
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("PWRyff’s PWB Inventory VS Wagnild & Young’s Resilience Scale") +
+  xlab("PWB SCORES") + ylab("RES SCORES")+geom_abline(intercept = 3.1812 , slope =  0.5116 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 #---------------------------------------- MBI VS RES -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Getting the parameters of the regression model for the scatter plot
-model <- lm( TOTALSCORE_RES_STD~ TOTALSCORE_MBI_STD, data = data1)
+model <- lm(TOTALSCORE_MBI_STD ~TOTALSCORE_RES_STD , data = data1)
 model
 #Making the graph
 d=data.frame(TOTALSCORE_MBI_STD,TOTALSCORE_RES_STD)
 d$pc <- predict(prcomp(~TOTALSCORE_MBI_STD+TOTALSCORE_RES_STD, d))[,1]
-ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_RES_STD, color = pc)) +
-  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Maslach’s Burnout Inventory  VS Wagnild & Young’s Resilience Scale") +
-  xlab("MBI SCORES") + ylab("RES SCORES")+geom_abline(intercept = 6.0179 , slope =0.1683 , color="red", linetype="dashed", size=1.5)+
+ggplot(d, aes(TOTALSCORE_RES_STD,TOTALSCORE_MBI_STD, color = pc)) +
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Wagnild & Young’s Resilience Scale VS Maslach’s Burnout Inventory") +
+  xlab("RES SCORES") + ylab("MBI SCORES")+geom_abline(intercept = 6.8327  , slope =-0.3766 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 #---------------------------------------- MBI VS PWB ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
 #Getting the parameters of the regression model for the scatter plot
-model <- lm( TOTALSCORE_PWB_STD~ TOTALSCORE_MBI_STD, data = data1)
+model <- lm( TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD , data = data1)
 model
 #Making the graph
 d=data.frame(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD)
-d$pc <- predict(prcomp(~TOTALSCORE_MBI_STD+TOTALSCORE_PWB_STD, d))[,1]
-ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD, color = pc)) +
-  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Maslach’s Burnout Inventory  VS Ryff’s PWB Inventory") +
-  xlab("MBI SCORES") + ylab("PWB SCORES")+geom_abline(intercept = 7.05 , slope =  0.06 , color="red", linetype="dashed", size=1.5)+
+d$pc <- predict(prcomp(~TOTALSCORE_PWB_STD+TOTALSCORE_MBI_STD, d))[,1]
+ggplot(d, aes(TOTALSCORE_PWB_STD,TOTALSCORE_MBI_STD, color = pc)) +
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Ryff’s PWB Inventory  VS Maslach’s Burnout Inventory") +
+  xlab("PWB SCORES") + ylab("MBI SCORES")+geom_abline(intercept = 8.2002 , slope =   -0.5399 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 #****************************************** Teacher experience histogram *************************************************************************************************************************************************************
 ggplot(data = data1, aes(x = TEACHING_EXPERIENCE)) +
