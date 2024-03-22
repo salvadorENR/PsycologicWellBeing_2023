@@ -95,7 +95,7 @@ TEACHING_EXPERIENCE1=TXClass(TEACHING_EXPERIENCE)
 MBI_EE=MBI_SCALE_EE(SCORE_MBI_S1)
 MBI_DP=MBI_SCALE_DP(SCORE_MBI_S2)
 MBI_PA=MBI_SCALE_PA(SCORE_MBI_S3)
-
+table(MBI_PA)
 #------------------------------------------------------------------------------------
 #******************************************************************************************
 # Create a data frame
