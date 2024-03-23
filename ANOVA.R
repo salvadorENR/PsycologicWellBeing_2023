@@ -1,9 +1,7 @@
 #***************************** Loading the required packages *************************************************************************************************************************************************************************************************************************************
 install.packages("dunn.test")
 install.packages("PMCMRplus")
-install.packages("onewaytests")
 
-library(onewaytests)
 library(hrbrthemes)
 library(stargazer)               
 library(plyr)
@@ -139,33 +137,58 @@ Edad2=function(var1){
   }
   rango
 }
+Edad3=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]<=35){
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>35&var1[i]<=42.5){
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>42.5&var1[i]<=51){
+      m=m+1
+      rango[m]=3
+    }
+    if(var1[i]>51){
+      m=m+1
+      rango[m]=4
+    }
+    
+  }
+  rango
+}
 RESNiveles=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
-    if(var1[i]<=100){
+    if(var1[i]<=5.7){
       m=m+1
       rango[m]=1
     }
-    if(var1[i]>100&var1[i]<=131){
+    if(var1[i]>5.7&var1[i]<=7.5){
       m=m+1
       rango[m]=2
     }
-    if(var1[i]>131&var1[i]<=145){
+    if(var1[i]>7.5&var1[i]<=8.3){
       m=m+1
       rango[m]=3
     }
-    if(var1[i]>145&var1[i]<=161){
+    if(var1[i]>8.3&var1[i]<=9.2){
       m=m+1
       rango[m]=4
     }
-    if(var1[i]>161){
+    if(var1[i]>9.2){
       m=m+1
       rango[m]=5
     }
   }
   rango
 }
+
 PWBNiveles=function(var1){
   rango=numeric()
   m=0
@@ -211,17 +234,17 @@ MBI_SCALE_EE=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
-    if(var1[i]<=18){
+    if(var1[i]<=3.5){#18
       m=m+1
       rango[m]=1
     }
-    if(var1[i]>=19&var1[i]<=26){
+    if(var1[i]>3.5&var1[i]<=5){ #19 and 26
       m=m+1
       rango[m]=2
     }
-    if(var1[i]>=27){
+    if(var1[i]>5){ #27
       m=m+1
-      rango[m]=3
+      rango[m]=3 
     }
   }
   rango
@@ -230,15 +253,15 @@ MBI_SCALE_DP=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
-    if(var1[i]<=5){
+    if(var1[i]<=1.7){#5
       m=m+1
       rango[m]=1
     }
-    if(var1[i]>=6&var1[i]<=9){
+    if(var1[i]>1.7&var1[i]<=3.0){#6 a 9
       m=m+1
       rango[m]=2
     }
-    if(var1[i]>=10){
+    if(var1[i]>3){#10
       m=m+1
       rango[m]=3
     }
@@ -249,53 +272,149 @@ MBI_SCALE_PA=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
-    if(var1[i]<=33){
+    if(var1[i]>8.3){#40
       m=m+1
       rango[m]=1
     }
-    if(var1[i]>=34&var1[i]<=39){
+    if(var1[i]>6.9&var1[i]<=8.3){#34 and 39
       m=m+1
       rango[m]=2
     }
-    if(var1[i]>=40){
+    if(var1[i]<=6.9){#33 
       m=m+1
       rango[m]=3
     }
   }
   rango
 }
+
+MBI_SCALE_EE=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]<=18){#18
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>=19&var1[i]<=26){ #19 and 26
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>=27){ #27
+      m=m+1
+      rango[m]=3 
+    }
+  }
+  rango
+}
+MBI_SCALE_DP=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]<=5){#5
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>=6&var1[i]<=9){#6 a 9
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>=10){#10
+      m=m+1
+      rango[m]=3
+    }
+  }
+  rango
+}
+MBI_SCALE_PA=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+    if(var1[i]>=40){#40
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>=34&var1[i]<=39){#34 and 39
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]<=33){#33 
+      m=m+1
+      rango[m]=3
+    }
+  }
+  rango
+}
+
+
+
+
+
+
 TEACHING_EXPERIENCE1=TXClass(TEACHING_EXPERIENCE)
 EdadProfesores=Edad(AGE)
 EdadProfesores2=Edad2(AGE)
-PWB_I=as.factor(PWBNiveles(TOTALSCORE_PWB))
-PWB_I=PWBNiveles2(TOTALSCORE_PWB)
-RES_I=RESNiveles(TOTALSCORE_RES)
+EdadProfesores3=Edad3(AGE)
+PWB_I=PWBNiveles(TOTALSCORE_PWB)
+PWB_I=PWBNiveles2(TOTALSCORE_PWB_STD)
+RES_I=RESNiveles(TOTALSCORE_RES_STD)
 MBI_EE=MBI_SCALE_EE(SCORE_MBI_S1)
 MBI_DP=MBI_SCALE_DP(SCORE_MBI_S2)
 MBI_PA=MBI_SCALE_PA(SCORE_MBI_S3)
-#****************************ANOVA ONE FACTOR*******************************************
+sort(SCORE_MBI_S1)
+sort(SCORE_MBI_S2)
+sort(SCORE_MBI_S3)
+
+table(MBI_EE)
+table(MBI_DP)
+table(MBI_PA)
+#****************************Kruskal Wallis*******************************************
 #++++++++++++++++++++++++++++TESTS++++++++++++++++++++++++++++++++++++++++++++++
-data1 <- data.frame(var1=TOTALSCORE_MBI,var2=PWB_I) 
+#External Exhaustation_and_Age ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=EdadProfesores3) 
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
 print(kruskal_result1)
 dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
 print(dunn_result1)
 Tapply(data1$var1 ~ data1$var2,median,data=data1)
-#The interaction is not significantb
 
-data2 <- data.frame(var1=TOTALSCORE_MBI,var2=RES_I) 
-kruskal_result2 <- kruskal.test(var1 ~ var2, data = data2)
+#Depersonalization_and_Age ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=EdadProfesores3) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+#Personal Accomplishment_and_Age ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S3_STD_2,var2=EdadProfesores3) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+
+
+#Burnout_and_Psycological_Well Being -------------------------------------
+data2 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=PWB_I) 
+kruskal_result2 <- kruskal.test(var1 ~ var2, data =data2)
 print(kruskal_result2)
 dunn_result2 <- dunn.test(data2$var1, g = data2$var2, method = "bonferroni")
 print(dunn_result2)
-Tapply(data2$var1 ~ data2$var2,median,data=data2)
+Tapply(data1$var1 ~ data1$var2,median,data=data2)
 
-data3 <- data.frame(var1=TOTALSCORE_RES_STD,var2=TXClass(TEACHING_EXPERIENCE)) 
+
+
+#Burnout_and_Resilience -------------------------------------------------
+data3 <- data.frame(var1=TOTALSCORE_MBI_STD,var2=RES_I) 
 kruskal_result3 <- kruskal.test(var1 ~ var2, data = data3)
 print(kruskal_result3)
 dunn_result3 <- dunn.test(data3$var1, g = data3$var2, method = "bonferroni")
 print(dunn_result3)
+Tapply(data3$var1 ~ data3$var2,median,data=data3)
 
+# Other_Commands ----------------------------------------------------------
 #************************* ANOVA TWO FACTORS ***********************************
 # Create a data frame
 data=data.frame(TEACHING_EXPERIENCE1,MBI_EE,TOTALSCORE_PWB)
@@ -363,22 +482,50 @@ model=lm(TOTALSCORE_MBI~PWB_I*RES_I,data=data3)
 anova_result=anova(model)
 print(anova_result)
 
-data4=data.frame(PWB_I,TOTALSCORE_MBI)
-par(mfrow = c(1, 2))
-qqnorm(data4$TOTALSCORE_MBI)
-qqline(data4$TOTALSCORE_MBI)
-shapiro.test(data4$TOTALSCORE_MBI)
-boxplot(TOTALSCORE_MBI ~ PWB_I, data = data4)
-bf.test(TOTALSCORE_MBI ~ PWB_I, data = data4)
-leveneTest(TOTALSCORE_MBI ~ PWB_I, data = data4)
-model=lm(TOTALSCORE_MBI~PWB_I,data=data4)
-anova_result=anova(model)
-print(anova_result)
 
-data5=data.frame(RES_I,TOTALSCORE_MBI)
-model=lm(TOTALSCORE_MBI~RES_I,data=data5)
-anova_result=anova(model)
-print(anova_result)
+
+   
+
+#Depersonalization_and_pwb ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=PWB_I) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+#Personal Accomplishment_and_pwb ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S3_STD_2,var2=PWB_I) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+
+#External Exhaustation_and_res ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=RES_I) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+#Depersonalization_and_res ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=RES_I) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+
+#Personal Accomplishment_and_res ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S3_STD_2,var2=RES_I) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
 
 
 
