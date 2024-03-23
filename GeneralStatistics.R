@@ -140,6 +140,8 @@ ggplot(d, aes(TOTALSCORE_PWB_STD,TOTALSCORE_RES_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("PWRyff’s PWB Inventory VS Wagnild & Young’s Resilience Scale") +
   xlab("PWB SCORES") + ylab("RES SCORES")+geom_abline(intercept = 3.1812 , slope =  0.5116 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_RES_STD, method = 'spearman')
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_RES_STD, method = 'pearson')
 #---------------------------------------- MBI VS RES -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Getting the parameters of the regression model for the scatter plot
 model <- lm(TOTALSCORE_MBI_STD ~TOTALSCORE_RES_STD , data = data1)
@@ -151,6 +153,8 @@ ggplot(d, aes(TOTALSCORE_RES_STD,TOTALSCORE_MBI_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Wagnild & Young’s Resilience Scale VS Maslach’s Burnout Inventory") +
   xlab("RES SCORES") + ylab("MBI SCORES")+geom_abline(intercept = 6.8327  , slope =-0.3766 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+cor.test(x=TOTALSCORE_RES_STD, y=TOTALSCORE_MBI_STD, method = 'spearman')
+cor.test(x=TOTALSCORE_RES_STD, y=TOTALSCORE_MBI_STD, method = 'pearson')
 #---------------------------------------- MBI VS PWB ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
 #Getting the parameters of the regression model for the scatter plot
 model <- lm( TOTALSCORE_MBI_STD~TOTALSCORE_PWB_STD , data = data1)
@@ -162,6 +166,8 @@ ggplot(d, aes(TOTALSCORE_PWB_STD,TOTALSCORE_MBI_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Ryff’s PWB Inventory  VS Maslach’s Burnout Inventory") +
   xlab("PWB SCORES") + ylab("MBI SCORES")+geom_abline(intercept = 8.2002 , slope =   -0.5399 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_MBI_STD, method = 'spearman')
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_MBI_STD, method = 'pearson')
 #****************************************** Teacher experience histogram *************************************************************************************************************************************************************
 ggplot(data = data1, aes(x = TEACHING_EXPERIENCE)) +
   geom_histogram(colour="#1F3552", fill="#008AA6",binwidth=5,boundary=0)+scale_x_continuous(breaks = seq(0,45,5),name="Number of years")+
