@@ -1,4 +1,7 @@
 #***************************** Loading the required packages *************************************************************************************************************************************************************************************************************************************
+install.packages("GGally")
+
+
 library(hrbrthemes)
 library(stargazer)               
 library(plyr)
@@ -31,6 +34,7 @@ library(ggeffects)
 library(stargazer)               
 library(texreg)  
 library(dplyr)
+library(GGally)
 #*************************************** Reading the data base *******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 data1=read.csv("DBHE.csv",sep=",")
 data1=as.data.frame(data1)
@@ -42,7 +46,7 @@ estadistics=data.frame(TOTALSCORE_PWB_STD,TOTALSCORE_RES_STD,TOTALSCORE_MBI_STD)
 stat.desc(estadistics)
 #---------------------------------- Correlations ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 res2 <- rcorr(cbind(SCORE_PWB_S1_STD,SCORE_PWB_S2_STD, SCORE_PWB_S3_STD, SCORE_PWB_S4_STD,SCORE_PWB_S5_STD,SCORE_PWB_S6_STD, TOTALSCORE_PWB_STD,+
-                      SCORE_RES_S1_STD,SCORE_RES_S2_STD,SCORE_RES_S3_STD,SCORE_RES_S4_STD,SCORE_RES_S5_STD,TOTALSCORE_RES_STD, SCORE_MBI_S1_STD,SCORE_MBI_S2_STD,SCORE_MBI_S3_STD,+   
+                      SCORE_RES_S1_STD,SCORE_RES_S2_STD,SCORE_RES_S3_STD,SCORE_RES_S4_STD,SCORE_RES_S5_STD,TOTALSCORE_RES_STD, SCORE_MBI_S1_STD,SCORE_MBI_S2_STD,SCORE_MBI_S3_STD_2,+   
                       TOTALSCORE_MBI_STD ), type = c("pearson","spearman"))
 res2 
 res3 <- rcorr(cbind( TOTALSCORE_PWB_STD, TOTALSCORE_RES_STD, TOTALSCORE_MBI_STD,SCORE_MBI_S1_STD,SCORE_MBI_S2_STD,SCORE_MBI_S3_STD,TEACHING_EXPERIENCE,AGE), type = c("pearson","spearman"))
@@ -57,7 +61,11 @@ MBIBASE=data.frame(MBI1,MBI2,MBI3,MBI4,MBI5,MBI6,MBI7,MBI8,+
 cronbach.alpha(MBIBASE, CI=TRUE, standardized=TRUE)
 
 MBI_EE=data.frame(MBI1,MBI2,MBI3,MBI6,MBI8,+
+<<<<<<< HEAD
                     MBI13,MBI14,MBI16,MBI20)
+=======
+                     MBI13,MBI14,MBI16,MBI20)
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 cronbach.alpha(MBI_EE, CI=TRUE, standardized=TRUE)
 
 MBI_DP=data.frame(MBI5,MBI10,MBI11,MBI15,+
@@ -122,9 +130,10 @@ radarchart(subscales2, axistype=1 ,
            #custom labels
            vlcex=1)
 #------------------------------ MBI Questionnaire ------------------------------------------------------------------------------------------------------------------------*******************************************************************************************************************************************************************************************************************************************
+
 mbis1=median(SCORE_MBI_S1_STD)
 mbis2=median(SCORE_MBI_S2_STD)
-mbis3=median(SCORE_MBI_S3_STD)
+mbis3=median(SCORE_MBI_S3_STD_2)
 
 subscales3=data.frame(mbis1,mbis2,mbis3)
 colnames(subscales3) <- c("Emotional Exhaustion","Depersonalization","Personal Accomplishment")
@@ -150,6 +159,8 @@ ggplot(d, aes(TOTALSCORE_RES_STD,TOTALSCORE_PWB_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Wagnild & Young’s Resilience Scale VS PWRyff’s PWB Inventory ") +
   xlab("RES SCORES") + ylab("PWB SCORES")+geom_abline(intercept = 4.11 , slope =  0.47 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_RES_STD, method = 'spearman')
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_RES_STD, method = 'pearson')
 #---------------------------------------- MBI VS RES -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Getting the parameters of the regression model for the scatter plot
 model <- lm( TOTALSCORE_RES_STD~ TOTALSCORE_MBI_STD, data = data1)
@@ -161,6 +172,8 @@ ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_RES_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Maslach’s Burnout Inventory  VS Wagnild & Young’s Resilience Scale") +
   xlab("MBI SCORES") + ylab("RES SCORES")+geom_abline(intercept = 6.0179 , slope =0.1683 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+cor.test(x=TOTALSCORE_RES_STD, y=TOTALSCORE_MBI_STD, method = 'spearman')
+cor.test(x=TOTALSCORE_RES_STD, y=TOTALSCORE_MBI_STD, method = 'pearson')
 #---------------------------------------- MBI VS PWB ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
 #Getting the parameters of the regression model for the scatter plot
 model <- lm( TOTALSCORE_PWB_STD~ TOTALSCORE_MBI_STD, data = data1)
@@ -172,6 +185,8 @@ ggplot(d, aes(TOTALSCORE_MBI_STD,TOTALSCORE_PWB_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Maslach’s Burnout Inventory  VS Ryff’s PWB Inventory") +
   xlab("MBI SCORES") + ylab("PWB SCORES")+geom_abline(intercept = 7.05 , slope =  0.06 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_MBI_STD, method = 'spearman')
+cor.test(x=TOTALSCORE_PWB_STD, y=TOTALSCORE_MBI_STD, method = 'pearson')
 #****************************************** Teacher experience histogram *************************************************************************************************************************************************************
 ggplot(data = data1, aes(x = TEACHING_EXPERIENCE)) +
   geom_histogram(colour="#1F3552", fill="#008AA6",binwidth=5,boundary=0)+scale_x_continuous(breaks = seq(0,45,5),name="Number of years")+
@@ -228,6 +243,7 @@ ggplot(d, aes(SCORE_MBI_S1_STD,TOTALSCORE_RES_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("External Exhaustation  VS Wagnild & Young’s Resilience Scale 
 ") +
   xlab("External Exhaustation") + ylab("RES SCORES")+geom_abline(intercept = 7.4025 , slope =    -0.0926  
+<<<<<<< HEAD
                                                                  , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 
@@ -246,6 +262,13 @@ ggplot(d, aes(SCORE_MBI_S2_STD,TOTALSCORE_RES_STD, color = pc)) +
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 
 #---------------------------------------- Personal Accomplishment VS RES ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+=======
+ , color="red", linetype="dashed", size=1.5)+
+  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+
+
+# PersonalAccomplishmentVSRES ---------------------------------------------
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 #Getting the parameters of the regression model for the scatter plot
 model <- lm( TOTALSCORE_RES_STD~ SCORE_MBI_S3_STD_2, data = data1)
 model
@@ -259,10 +282,42 @@ ggplot(d, aes(SCORE_MBI_S3_STD_2,TOTALSCORE_RES_STD, color = pc)) +
                                                                    , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+# DepersonalizationVSRES --------------------------------------------------
+#Getting the parameters of the regression model for the scatter plot
+model <- lm( TOTALSCORE_RES_STD~ SCORE_MBI_S2_STD, data = data1)
+model
+#Making the graph
+d=data.frame(SCORE_MBI_S2_STD,TOTALSCORE_RES_STD)
+d$pc <- predict(prcomp(~SCORE_MBI_S2_STD+TOTALSCORE_RES_STD, d))[,1]
+ggplot(d, aes(SCORE_MBI_S2_STD,TOTALSCORE_RES_STD, color = pc)) +
+  geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Despersonalization  VS Wagnild & Young’s Resilience Scale 
+") +
+  xlab("Despersonalization") + ylab("RES SCORES")+geom_abline(intercept = 7.24521 , slope =    -0.07803  
+                                                              , color="red", linetype="dashed", size=1.5)+
+  theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
+
+
+# MatrixOfScatterPlots ----------------------------------------------------
+MatrizDispersion=data.frame(
+  SCORE_MBI_S1_STD,
+  SCORE_MBI_S2_STD,
+  SCORE_MBI_S3_STD_2,
+  TOTALSCORE_PWB_STD,
+  TOTALSCORE_RES_STD
+)
+colnames(MatrizDispersion) <- c("Emotional Exhaustion ", "Depersonalization", "Personal Accomplishment", "Psychological Well Being", "Resilience")
+# Define the order of variables to reverse
+vars <- names(MatrizDispersion)[length(names(MatrizDispersion)):1]
+# Reorder the columns of the dataset
+MatrizDispersion <- MatrizDispersion[, vars]
+ggpairs(MatrizDispersion,   lower = list(continuous = "smooth"))
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 

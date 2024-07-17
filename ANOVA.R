@@ -2,6 +2,11 @@
 install.packages("dunn.test")
 install.packages("PMCMRplus")
 
+<<<<<<< HEAD
+=======
+
+# Packages ----------------------------------------------------------------
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 library(hrbrthemes)
 library(stargazer)               
 library(plyr)
@@ -36,11 +41,13 @@ library(texreg)
 library(dplyr)
 library(dunn.test)
 library(PMCMRplus)
-#*************************************** Reading the data base *******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+
+
+#Load Data Base ----------------------------------------------------------
 dataG=read.csv("DBHE.csv",sep=",")
 dataG=as.data.frame(dataG)
 attach(dataG)
-
 #If your data do not follow a normal distribution and you want to compare means between three groups, you can use 
 #a non-parametric test. One common non-parametric test for this scenario is the Kruskal-Wallis test. This test is
 #an extension of the Mann-Whitney U test to three or more groups. Here's how you can perform the Kruskal-Wallis 
@@ -59,8 +66,10 @@ attach(dataG)
 #less power than parametric tests when normality is met. Always consider the characteristics of your data and the 
 #assumptions of the statistical test when making interpretations.
 
-#++++++++++++++++++++++++++ Functions' creation ++++++++++++++++++++++++++++++++
-TXClass=function(var1){
+
+
+#Functions for making factors for Kruskal Wallis -------------------------
+TExp=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
@@ -76,13 +85,9 @@ TXClass=function(var1){
       m=m+1
       rango[m]=3
     }
-    if(var1[i]>10&var1[i]<=15){
+    if(var1[i]>10){
       m=m+1
       rango[m]=4
-    }
-    if(var1[i]>15){
-      m=m+1
-      rango[m]=5
     }
   }
   rango
@@ -91,48 +96,17 @@ Edad=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
-    if(var1[i]<=20){
+    if(var1[i]>20&var1[i]<=30){
       m=m+1
       rango[m]=1
     }
-    if(var1[i]>20&var1[i]<=30){
-      m=m+1
-      rango[m]=2
-    }
     if(var1[i]>30&var1[i]<=40){
       m=m+1
-      rango[m]=3
-    }
-    if(var1[i]>40&var1[i]<=50){
-      m=m+1
-      rango[m]=4
-    }
-    if(var1[i]>50){
-      m=m+1
-      rango[m]=5
-    }
-  }
-  rango
-}
-Edad2=function(var1){
-  rango=numeric()
-  m=0
-  for (i in 1:length(var1)) {
-    if(var1[i]<=20){
-      m=m+1
-      rango[m]=1
-    }
-    if(var1[i]>20&var1[i]<=30){
-      m=m+1
       rango[m]=2
-    }
-    if(var1[i]>30&var1[i]<=40){
-      m=m+1
-      rango[m]=3
     }
     if(var1[i]>40){
       m=m+1
-      rango[m]=5
+      rango[m]=3
     }
   }
   rango
@@ -229,8 +203,7 @@ PWBNiveles2=function(var1){
   }
   rango
 }
-
-MBI_SCALE_EE=function(var1){
+MBI_SCALE_EE_STD=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
@@ -249,7 +222,7 @@ MBI_SCALE_EE=function(var1){
   }
   rango
 }
-MBI_SCALE_DP=function(var1){
+MBI_SCALE_DP_STD=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
@@ -268,7 +241,7 @@ MBI_SCALE_DP=function(var1){
   }
   rango
 }
-MBI_SCALE_PA=function(var1){
+MBI_SCALE_PA_STD=function(var1){
   rango=numeric()
   m=0
   for (i in 1:length(var1)) {
@@ -287,7 +260,101 @@ MBI_SCALE_PA=function(var1){
   }
   rango
 }
+MBI_SCALE_EE=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+<<<<<<< HEAD
+    if(var1[i]<=3.5){#18
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>3.5&var1[i]<=5){ #19 and 26
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>5){ #27
+=======
+    if(var1[i]<=18){#18
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>=19&var1[i]<=26){ #19 and 26
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>=27){ #27
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
+      m=m+1
+      rango[m]=3 
+    }
+  }
+  rango
+}
+MBI_SCALE_DP=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+<<<<<<< HEAD
+    if(var1[i]<=1.7){#5
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>1.7&var1[i]<=3.0){#6 a 9
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>3){#10
+=======
+    if(var1[i]<=5){#5
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>=6&var1[i]<=9){#6 a 9
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]>=10){#10
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
+      m=m+1
+      rango[m]=3
+    }
+  }
+  rango
+}
+MBI_SCALE_PA=function(var1){
+  rango=numeric()
+  m=0
+  for (i in 1:length(var1)) {
+<<<<<<< HEAD
+    if(var1[i]>8.3){#40
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>6.9&var1[i]<=8.3){#34 and 39
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]<=6.9){#33 
+=======
+    if(var1[i]>=40){#40
+      m=m+1
+      rango[m]=1
+    }
+    if(var1[i]>=34&var1[i]<=39){#34 and 39
+      m=m+1
+      rango[m]=2
+    }
+    if(var1[i]<=33){#33 
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
+      m=m+1
+      rango[m]=3
+    }
+  }
+  rango
+}
 
+<<<<<<< HEAD
 MBI_SCALE_EE=function(var1){
   rango=numeric()
   m=0
@@ -361,6 +428,23 @@ RES_I=RESNiveles(TOTALSCORE_RES_STD)
 MBI_EE=MBI_SCALE_EE(SCORE_MBI_S1)
 MBI_DP=MBI_SCALE_DP(SCORE_MBI_S2)
 MBI_PA=MBI_SCALE_PA(SCORE_MBI_S3)
+=======
+TEACHING_EXPERIENCE=TExp(TEACHING_EXPERIENCE)
+EdadProfesores=Edad(AGE)
+
+PWB_I=PWBNiveles(TOTALSCORE_PWB)
+PWB_I=PWBNiveles2(TOTALSCORE_PWB_STD)
+
+RES_I=RESNiveles(TOTALSCORE_RES_STD)
+
+MBI_EE=MBI_SCALE_EE(SCORE_MBI_S1)
+MBI_DP=MBI_SCALE_DP(SCORE_MBI_S2)
+MBI_PA=MBI_SCALE_PA(SCORE_MBI_S3)
+MBI_EE=MBI_SCALE_EE_STD(SCORE_MBI_S1_STD)
+MBI_DP=MBI_SCALE_DP_STD(SCORE_MBI_S2_STD)
+MBI_PA=MBI_SCALE_PA_STD(SCORE_MBI_S3_STD_2)
+
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 sort(SCORE_MBI_S1)
 sort(SCORE_MBI_S2)
 sort(SCORE_MBI_S3)
@@ -368,10 +452,42 @@ sort(SCORE_MBI_S3)
 table(MBI_EE)
 table(MBI_DP)
 table(MBI_PA)
+<<<<<<< HEAD
 #****************************Kruskal Wallis*******************************************
 #++++++++++++++++++++++++++++TESTS++++++++++++++++++++++++++++++++++++++++++++++
 #External Exhaustation_and_Age ---------------------------------------------------------
 data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=EdadProfesores3) 
+=======
+
+
+
+#****************************Kruskal Wallis*******************************************
+#++++++++++++++++++++++++++++TESTS++++++++++++++++++++++++++++++++++++++++++++++
+
+#External Exhaustation_and_TeachingExp ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=TEACHING_EXPERIENCE) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+#Depersonalization_and_TeachingExp ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=TEACHING_EXPERIENCE) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+#Personal Accomplishment_and_TeachingExp ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S3_STD_2,var2=TEACHING_EXPERIENCE) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+#External Exhaustation_and_Age ---------------------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=EdadProfesores) 
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
 print(kruskal_result1)
 dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
@@ -379,7 +495,11 @@ print(dunn_result1)
 Tapply(data1$var1 ~ data1$var2,median,data=data1)
 
 #Depersonalization_and_Age ---------------------------------------------------------
+<<<<<<< HEAD
 data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=EdadProfesores3) 
+=======
+data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=EdadProfesores) 
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
 print(kruskal_result1)
 dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
@@ -387,7 +507,11 @@ print(dunn_result1)
 Tapply(data1$var1 ~ data1$var2,median,data=data1)
 
 #Personal Accomplishment_and_Age ---------------------------------------------------------
+<<<<<<< HEAD
 data1 <- data.frame(var1=SCORE_MBI_S3_STD_2,var2=EdadProfesores3) 
+=======
+data1 <- data.frame(var1=SCORE_MBI_S3_STD_2,var2=EdadProfesores) 
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
 print(kruskal_result1)
 dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
@@ -414,6 +538,7 @@ dunn_result3 <- dunn.test(data3$var1, g = data3$var2, method = "bonferroni")
 print(dunn_result3)
 Tapply(data3$var1 ~ data3$var2,median,data=data3)
 
+<<<<<<< HEAD
 # Other_Commands ----------------------------------------------------------
 #************************* ANOVA TWO FACTORS ***********************************
 # Create a data frame
@@ -481,10 +606,22 @@ data3=data.frame(PWB_I,TOTALSCORE_MBI,RES_I)
 model=lm(TOTALSCORE_MBI~PWB_I*RES_I,data=data3)
 anova_result=anova(model)
 print(anova_result)
+=======
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 
 
 
 
+<<<<<<< HEAD
+=======
+#External Exhaustation and pwb -------------------------------------------
+data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=PWB_I) 
+kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
+print(kruskal_result1)
+dunn_result1 <- dunn.test(data1$var1, g = data1$var2, method = "bonferroni")
+print(dunn_result1)
+Tapply(data1$var1 ~ data1$var2,median,data=data1)
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 
 #Depersonalization_and_pwb ---------------------------------------------------------
 data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=PWB_I) 
@@ -503,6 +640,11 @@ print(dunn_result1)
 Tapply(data1$var1 ~ data1$var2,median,data=data1)
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 #External Exhaustation_and_res ---------------------------------------------------------
 data1 <- data.frame(var1=SCORE_MBI_S1_STD,var2=RES_I) 
 kruskal_result1 <- kruskal.test(var1 ~ var2, data = data1)
