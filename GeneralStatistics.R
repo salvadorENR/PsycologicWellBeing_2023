@@ -57,7 +57,7 @@ MBIBASE=data.frame(MBI1,MBI2,MBI3,MBI4,MBI5,MBI6,MBI7,MBI8,+
 cronbach.alpha(MBIBASE, CI=TRUE, standardized=TRUE)
 
 MBI_EE=data.frame(MBI1,MBI2,MBI3,MBI6,MBI8,+
-                     MBI13,MBI14,MBI16,MBI20)
+                    MBI13,MBI14,MBI16,MBI20)
 cronbach.alpha(MBI_EE, CI=TRUE, standardized=TRUE)
 
 MBI_DP=data.frame(MBI5,MBI10,MBI11,MBI15,+
@@ -228,7 +228,7 @@ ggplot(d, aes(SCORE_MBI_S1_STD,TOTALSCORE_RES_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("External Exhaustation  VS Wagnild & Young’s Resilience Scale 
 ") +
   xlab("External Exhaustation") + ylab("RES SCORES")+geom_abline(intercept = 7.4025 , slope =    -0.0926  
- , color="red", linetype="dashed", size=1.5)+
+                                                                 , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 
 #---------------------------------------- Depersonalization VS RES ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
@@ -256,7 +256,7 @@ ggplot(d, aes(SCORE_MBI_S3_STD_2,TOTALSCORE_RES_STD, color = pc)) +
   geom_point(shape = 16,size = 5, show.legend = FALSE) + ggtitle("Personal Accomplishment  VS Wagnild & Young’s Resilience Scale 
 ") +
   xlab("Personal Accomplishment") + ylab("RES SCORES")+geom_abline(intercept =  3.7784  , slope =   0.4111  
-                                                              , color="red", linetype="dashed", size=1.5)+
+                                                                   , color="red", linetype="dashed", size=1.5)+
   theme_minimal() +scale_color_gradient(low = "#008AA6", high = "#00758C")+theme(plot.title = element_text(hjust = 0.5))
 
 

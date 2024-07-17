@@ -205,7 +205,7 @@ PWBNiveles=function(var1){
       m=m+1
       rango[m]=3
     }
-  
+    
   }
   rango
 }
@@ -484,7 +484,7 @@ print(anova_result)
 
 
 
-   
+
 
 #Depersonalization_and_pwb ---------------------------------------------------------
 data1 <- data.frame(var1=SCORE_MBI_S2_STD,var2=PWB_I) 
