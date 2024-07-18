@@ -2,11 +2,8 @@
 install.packages("dunn.test")
 install.packages("PMCMRplus")
 
-<<<<<<< HEAD
-=======
 
 # Packages ----------------------------------------------------------------
->>>>>>> adb7a66e439b04f3530933f5e3d654a1596d89bd
 library(hrbrthemes)
 library(stargazer)               
 library(plyr)
